@@ -7,7 +7,7 @@ const sequelize = require("./../config/database");
 
 
 
-const InvitedUser=sequelize.define("InvitedUser",{
+const InvitedGuest=sequelize.define("InvitedUser",{
     email:{
         type:DataTypes.STRING,
         allowNull:false        
@@ -16,4 +16,4 @@ const InvitedUser=sequelize.define("InvitedUser",{
 
 
 
-module.exports=InvitedUser
+module.exports=InvitedGuest
