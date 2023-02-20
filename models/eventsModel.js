@@ -1,24 +1,14 @@
 
-const {DataTypes}=require("sequelize");
-
-// const sequelize = require("../database");
-const {sequelize} = require('./../config/db.config')
-
-
-
-const Event = sequelize.define("Event",{
+module.exports =(sequelize,DataTypes)=>{
+    const Event = sequelize.define("Event",{
     eventName:{
         type:DataTypes.STRING,
         allowNull:false
     },
-    details:{
+    eventDetails:{
         type:DataTypes.STRING,
         allowNull:false
     },
-    eventCreator:{
-        type:DataTypes.STRING,
-        allowNull:false
-    }, 
     eventCreatedDate:{
         type:DataTypes.DATE,
         defaultValue:DataTypes.NOW
@@ -26,8 +16,12 @@ const Event = sequelize.define("Event",{
     eventDate:{
         type:DataTypes.DATE,
         allowNull:false
-    }
+    },
+    UserId:DataTypes.INTEGER
 })
+return Event;
+
+}
 
 
-module.exports=Event
+// module.exports=Event

@@ -1,5 +1,8 @@
 // const express = require('express')
-const User = require('../../models/userModel');
+const {db}=require('../../config/db')
+const User = db.user;
+const InvitedGuest=db.guest;
+const Event = db.event;
 const jwt=require("jsonwebtoken")
 const bcrypt = require('bcrypt');
 
@@ -21,9 +24,33 @@ async function loginUser(req,res){
     const validPassword = await bcrypt.compare(req.body.password, userWithEmail.dataValues.password);
 
     if(validPassword){
-        // const jwtToken = jwt.sign({id:userWithEmail.id, email:userWithEmail.email},process.env.JWT_SECRET)
+        let createdEvent = await User.findAll({
+            attributes:['id','fullName','email'],
+            include:[
+                {
+                    model:Event,
+                    as:'userEvents',
+                    attributes:['eventName','eventDetails','eventDate']
+                }
+            ],
+            where:{email:email}
+        })
+        let invitedEvent = await InvitedGuest.findAll({
+            attributes:['id','email',],
+            include:[
+                {
+                    model:Event,
+                    as:'guestEvent',
+                    attributes:['eventName','id']
+                }
+            ],
+            where:{email:email}
+            
+        })
+        
+        // ----------------------------------------
         const jwtToken=setJWT(userWithEmail.id,userWithEmail.email)
-        return  res.json({message:"Welcome Back",token:jwtToken})
+        return  res.json({message:"Welcome Back",token:jwtToken,invitedEvent:invitedEvent,createdEvent:createdEvent})
     }else{
         return res.status(400).send('Invalid Email or Password.')
     }

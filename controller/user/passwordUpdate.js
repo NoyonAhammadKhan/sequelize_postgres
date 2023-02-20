@@ -1,4 +1,5 @@
-const User = require('../../models/userModel');
+const {db}=require('../../config/db')
+const User = db.user;
 const jwt=require("jsonwebtoken")
 const bcrypt = require('bcrypt');
 
@@ -21,10 +22,15 @@ async function passwordUpdate(req,res){
         return res.status(400).json({"message":"your put wrong password.put correct password to update new password"});
     }
     const password = await bcrypt.hash(newPassword, 10);
-    User.update({ password},{where:{email:email}}).then(res=>{
-        console.log(res)
+    User.update({ password},{where:{email:email}}).then(upRes=>{
+    
+    if(upRes.length==1){
+        return res.status(200).send({"message":"password updated"})
+    }
     })
     .catch(err=>console.log(err))
+
+    // console.log(data,"data")
    }catch(e){
     console.log(e)
    }

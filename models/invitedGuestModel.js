@@ -1,19 +1,22 @@
 
-const {DataTypes}=require("sequelize");
+const {DataTypes, Model}=require("sequelize");
 
-// const sequelize = require("../database");
-
-const sequelize = require("./../config/database");
-
-
+module.exports=(sequelize,DataTypes)=>{
 
 const InvitedGuest=sequelize.define("InvitedUser",{
     email:{
         type:DataTypes.STRING,
         allowNull:false        
-    }
+    },
+    EventId:DataTypes.INTEGER,
 })
+return InvitedGuest;
+
+}
 
 
 
-module.exports=InvitedGuest
+
+
+
+

@@ -1,6 +1,6 @@
 const express = require('express');
 // const sequelize = require('./database');
-const {sequelize,connectDB} = require('./config/db.config')
+const {sequelize,connectDB} = require('./config/db')
 // const User = require('./User')
 const bodyParser = require('body-parser');
 const userRouter =require('./routes/userRoutes');
@@ -24,7 +24,7 @@ app.use(bodyParser.json())
 connectDB()
 
 app.use('/user',userRouter);
-// app.use('/event',eventRouter);
+app.use('/event',eventRouter);
 
 
 

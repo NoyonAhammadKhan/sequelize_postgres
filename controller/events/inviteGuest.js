@@ -1,14 +1,13 @@
-const InvitedGuest=require('../../models/invitedGuestModel');
-
-
-
+// const InvitedGuest=require('../../models/invitedGuestModel');
+const {db}=require('../../config/db');
+const InvitedGuest = db.guest;
 
 
 
 async function inviteGuest(req,res){
-    const {guestEmail}=req.body;
+    const {email,EventId}=req.body;
 
-    const newGuest = new InvitedGuest({guestEmail})
+    const newGuest = new InvitedGuest({email,EventId});
 
     let savedGuest;
     try{
@@ -24,4 +23,4 @@ async function inviteGuest(req,res){
 }
 
 
-module.exports=createEvent
+module.exports=inviteGuest

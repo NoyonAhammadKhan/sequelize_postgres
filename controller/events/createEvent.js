@@ -1,17 +1,18 @@
-const Event = require('../../models/eventsModel');
 
-
-
+const {db}=require('../../config/db');
+const Event = db.event;
 
 
 async function createEvent(req,res){
-    const {eventName,details,eventCreator,eventDate}=req.body;
+    const {eventName,eventDetails,eventDate,UserId}=req.body;
+    console.log(req.body)
 
-    const newEvent = new Event({eventName,details,eventCreator,eventDate});
+    const newEvent = new Event({eventName,eventDetails,eventDate,UserId});
 
     let savedEvent;
     try{
         savedEvent=await newEvent.save().catch((err)=>{
+            console.log(err)
             return res.json({message:"cannot register event now"})
         })
     }catch(e){

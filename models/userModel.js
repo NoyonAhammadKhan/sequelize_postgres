@@ -1,9 +1,4 @@
-
-
-const {DataTypes}=require("sequelize");
-// const sequelize = require("../database");
-const {sequelize} = require("./../config/db.config");
-
+module.exports=(sequelize,DataTypes)=>{
 
 const People = sequelize.define("User",{
     fullName:{
@@ -19,6 +14,8 @@ const People = sequelize.define("User",{
         allowNull:false
     },
     
-})
+},{})
+return People;
 
-module.exports = People
+}
+

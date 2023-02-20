@@ -1,6 +1,8 @@
 
-const User = require('../../models/userModel')
+// const User = require('../../models/userModel')
 const bcrypt = require('bcrypt');
+const {db}=require('../../config/db');
+const User = db.user;
 
 async function hashPW(password){
     const salt = await bcrypt.genSalt(10)
@@ -13,7 +15,11 @@ async function addUser(req,res){
     
     
     const password = await bcrypt.hash(req.body.password, 10);
-    const alreadyExistsUser = await User.findOne({where:{email}}).catch((err)=>{
+    const alreadyExistsUser = await User.findOne({
+        where:{
+            email:email
+        }
+    }).catch((err)=>{
         console.log("Error",err)
     })
     // console.log(hashedPassword)
