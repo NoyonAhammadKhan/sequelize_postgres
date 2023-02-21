@@ -4,14 +4,16 @@ const loginUser = require('../controller/user/userLogin');
 const { addUser } = require('../controller/user/userRegister');
 
 const getUser=require('../controller/user/getUser');
+const { passwordValidation, userValidation } = require('../middlewares/userValidation');
 
 const route =express.Router();
 
 
-route.post('/',addUser);
+route.post('/',userValidation,addUser);
 
 route.post('/login',loginUser);
 
-route.post('/uppass',passwordUpdate);
-route.get('/g',getUser)
+route.post('/update-password',passwordValidation,passwordUpdate);
+// route.get('/g',gue)
+
 module.exports=route

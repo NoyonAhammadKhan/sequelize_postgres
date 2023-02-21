@@ -25,7 +25,7 @@ async function loginUser(req,res){
 
     if(validPassword){
         let createdEvent = await User.findAll({
-            attributes:['id','fullName','email'],
+            attributes:[],
             include:[
                 {
                     model:Event,
@@ -36,12 +36,12 @@ async function loginUser(req,res){
             where:{email:email}
         })
         let invitedEvent = await InvitedGuest.findAll({
-            attributes:['id','email',],
+            attributes:[],
             include:[
                 {
                     model:Event,
                     as:'guestEvent',
-                    attributes:['eventName','id']
+                    attributes:['id','eventName','eventDetails','eventDate']
                 }
             ],
             where:{email:email}
@@ -54,7 +54,6 @@ async function loginUser(req,res){
     }else{
         return res.status(400).send('Invalid Email or Password.')
     }
-    
 }
 
 module.exports=loginUser
